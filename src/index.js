@@ -1,5 +1,6 @@
 import createConfiguration from "./configuration.js";
 import createRoute from "./routes/createRoute.js";
+import readRoute from "./routes/readRoute.js";
 /**
  */
 /**
@@ -9,7 +10,8 @@ import createRoute from "./routes/createRoute.js";
  * @property {string} baseUrl - This url is going to be used to create the routes
  * @property {Object} [defaultRouteParams] - Template for creating route
  * @property {Object} [schemas] - Validation schemas
- * @property {Object} [schemas.CreateBody] - Schema for validating
+ * @property {Object} [schemas.CreateBody] - Schema for validating resource for creation
+ * @property {Object} [schemas.IdParam] - Schema for validating :id parameter
  * @property {(resource) => Promise<void>} [create] - This function will be used to create a resource for POST {baseUrl} calls
  *
  * @param {FastifyInstance} fastify - fastify instance
@@ -23,6 +25,7 @@ export default function createCrudRoutes(fastify, options, done) {
   }
 
   fastify.register(createRoute, configuration, done);
+  fastify.register(readRoute, configuration, done);
 
   done();
 }
