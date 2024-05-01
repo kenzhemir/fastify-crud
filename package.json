@@ -1,0 +1,37 @@
+{
+  "name": "fastify-crud",
+  "version": "0.0.1",
+  "description": "Fastify plugin for creating CRUD routes",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "tap run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kenzhemir/fastify-crud.git"
+  },
+  "keywords": [
+    "fastify",
+    "crud"
+  ],
+  "author": "Miras Kenzhegaliyev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenzhemir/fastify-crud/issues"
+  },
+  "homepage": "https://github.com/kenzhemir/fastify-crud#readme",
+  "volta": {
+    "node": "20.12.2",
+    "npm": "10.6.0"
+  },
+  "devDependencies": {
+    "fastify": "^4.26.2",
+    "prettier": "3.2.5",
+    "tap": "^18.7.2"
+  }
+}
