@@ -2,6 +2,8 @@
  *
  * @typedef Configuration
  * @property {string} baseUrl - This url is going to be used to create the routes
+ * @property {Object} [schemas] - Validation schemas
+ * @property {Object} [schemas.CreateBody] - Schema for validating
  * @property {Object} [defaultRouteParams] - Template for creating route
  * @property {(resource) => Promise<void>} [create] - This function will be used to create a resource for POST {baseUrl} calls
  *
@@ -20,6 +22,11 @@ export default function createConfiguration(options) {
   configuration.defaultRouteParams = options.defaultRouteParams;
   configuration.baseUrl = formatBaseUrl(options.baseUrl);
   configuration.create = options.create;
+  if (options.schemas) {
+    configuration.schemas = {};
+    configuration.schemas.CreateBody = options.schemas.CreateBody;
+  }
+
   return { configuration };
 }
 

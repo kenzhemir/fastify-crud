@@ -8,6 +8,8 @@ import createRoute from "./routes/createRoute.js";
  * @typedef {Object} Options
  * @property {string} baseUrl - This url is going to be used to create the routes
  * @property {Object} [defaultRouteParams] - Template for creating route
+ * @property {Object} [schemas] - Validation schemas
+ * @property {Object} [schemas.CreateBody] - Schema for validating
  * @property {(resource) => Promise<void>} [create] - This function will be used to create a resource for POST {baseUrl} calls
  *
  * @param {FastifyInstance} fastify - fastify instance
