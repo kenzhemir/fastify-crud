@@ -2,7 +2,7 @@ import Fastify from "fastify";
 import t from "tap";
 import crudPlugin from "../src/index.js";
 
-// fixture
+// fixtures
 const bookPayload = {
   title: "Harry Potter",
 };
@@ -10,6 +10,10 @@ const bookFromDatabase = {
   id: 123,
   title: "Harry Potter",
 };
+function createMock(resource) {
+  t.strictSame(resource, bookPayload);
+  return bookFromDatabase;
+}
 const BookSchema = {
   $id: "BookSchema",
   type: "object",
@@ -48,10 +52,7 @@ t.test("Create route is registered with `create` function", async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: "/api/v1/books",
-    create: (resource) => {
-      t.strictSame(resource, bookPayload);
-      return bookFromDatabase;
-    },
+    create: createMock,
   });
 
   const fastifyResponse = await fastify.inject({
@@ -78,10 +79,7 @@ t.test("Create route is registered with `create` function", async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: "/api/v1/books",
-    create: (resource) => {
-      t.strictSame(resource, bookPayload);
-      return bookFromDatabase;
-    },
+    create: createMock,
   });
 
   const fastifyResponse = await fastify.inject({
@@ -108,12 +106,9 @@ t.test("Perform schema validation", async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: "/api/v1/books",
-    create: (resource) => {
-      t.strictSame(resource, bookPayload);
-      return bookFromDatabase;
-    },
+    create: createMock,
     schemas: {
-      Resource: BookSchema,
+      CreateBody: BookSchema,
     },
   });
 
@@ -144,12 +139,12 @@ t.test("Perform schema validation", async (t) => {
     body: JSON.stringify({ not_title: "Harry Potter" }),
   });
 
-  t.equal(fastifyFailuerResponse.statusCode, 201);
-  t.equal(
-    fastifyFailuerResponse.headers["content-type"],
-    "application/json; charset=utf-8"
-  );
-
+  t.equal(fastifyFailuerResponse.statusCode, 400);
   const failurePayload = fastifyFailuerResponse.json();
-  t.strictSame(failurePayload, bookFromDatabase);
+  t.strictSame(failurePayload, {
+    statusCode: 400,
+    code: "FST_ERR_VALIDATION",
+    error: "Bad Request",
+    message: "body must have required property 'title'",
+  });
 });

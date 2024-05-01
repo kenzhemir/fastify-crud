@@ -15,9 +15,9 @@ export default function createRoute(fastify, configuration, done) {
 
   createRoute.url = configuration.baseUrl;
   createRoute.method = HTTP_METHOD_CREATE;
-  if (configuration.schemas?.Resource) {
+  if (configuration.schemas?.CreateBody) {
     createRoute.schema = {
-      body: configuration.Resource,
+      body: configuration.schemas.CreateBody,
     };
   }
   createRoute.handler = async function createRouteHandler(req, res) {
