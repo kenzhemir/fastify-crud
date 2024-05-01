@@ -10,10 +10,6 @@ const bookFromDatabase = {
   id: 123,
   title: "Harry Potter",
 };
-function createMock(resource) {
-  t.strictSame(resource, bookPayload);
-  return bookFromDatabase;
-}
 const BookSchema = {
   $id: "BookSchema",
   type: "object",
@@ -52,34 +48,10 @@ t.test("Create route is registered with `create` function", async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: "/api/v1/books",
-    create: createMock,
-  });
-
-  const fastifyResponse = await fastify.inject({
-    method: "POST",
-    url: "/api/v1/books",
-    headers: {
-      "content-type": "application/json",
+    create: function createMock(resource) {
+      t.strictSame(resource, bookPayload);
+      return bookFromDatabase;
     },
-    body: JSON.stringify(bookPayload),
-  });
-
-  t.equal(fastifyResponse.statusCode, 201);
-  t.equal(
-    fastifyResponse.headers["content-type"],
-    "application/json; charset=utf-8"
-  );
-
-  const responsePayload = fastifyResponse.json();
-  t.strictSame(responsePayload, bookFromDatabase);
-});
-
-t.test("Create route is registered with `create` function", async (t) => {
-  const fastify = Fastify();
-
-  fastify.register(crudPlugin, {
-    baseUrl: "/api/v1/books",
-    create: createMock,
   });
 
   const fastifyResponse = await fastify.inject({
@@ -106,7 +78,10 @@ t.test("Perform schema validation", async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: "/api/v1/books",
-    create: createMock,
+    create: function createMock(resource) {
+      t.strictSame(resource, bookPayload);
+      return bookFromDatabase;
+    },
     schemas: {
       CreateBody: BookSchema,
     },
