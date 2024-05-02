@@ -1,6 +1,7 @@
 import createConfiguration from "./configuration.js";
 import createRoute from "./routes/createRoute.js";
 import readRoute from "./routes/readRoute.js";
+import updateRoute from "./routes/updateRoute.js";
 /**
  */
 /**
@@ -26,6 +27,7 @@ export default function createCrudRoutes(fastify, options, done) {
 
   fastify.register(createRoute, configuration, done);
   fastify.register(readRoute, configuration, done);
+  fastify.register(updateRoute, configuration, done);
 
   done();
 }
