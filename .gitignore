@@ -131,3 +131,7 @@ dist
 
 # tap package for testing
 .tap
+
+# stryker temp files
+.stryker-tmp
+reports
