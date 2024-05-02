@@ -8,7 +8,8 @@
     "node": "20"
   },
   "scripts": {
-    "test": "tap run"
+    "test": "tap run",
+    "test:mutation": "stryker run"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "npm": "10.6.0"
   },
   "devDependencies": {
+    "@stryker-mutator/tap-runner": "^8.2.6",
     "fastify": "^4.26.2",
     "prettier": "3.2.5",
     "tap": "^18.7.2"
