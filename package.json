@@ -8,6 +8,8 @@
     "node": "20"
   },
   "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "tap run",
     "test:mutation": "stryker run"
   },
@@ -33,6 +35,7 @@
     "@stryker-mutator/tap-runner": "^8.2.6",
     "fastify": "^4.26.2",
     "prettier": "3.2.5",
+    "standard": "*",
     "tap": "^18.7.2"
   }
 }

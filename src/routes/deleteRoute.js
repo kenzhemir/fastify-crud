@@ -1,5 +1,5 @@
-const HTTP_STATUS_DELETE = 204;
-const HTTP_METHOD_DELETE = "DELETE";
+const HTTP_STATUS_DELETE = 204
+const HTTP_METHOD_DELETE = 'DELETE'
 
 /**
  * This function registers POST /resources route
@@ -7,26 +7,26 @@ const HTTP_METHOD_DELETE = "DELETE";
  * @param {import('../configuration').Configuration} configuration
  * @returns
  */
-export default function deleteRoute(fastify, configuration, done) {
+export default function deleteRoute (fastify, configuration, done) {
   if (!configuration.delete) {
-    return done();
+    return done()
   }
-  const deleteRoute = configuration.defaultRouteParams ?? {};
+  const deleteRoute = configuration.defaultRouteParams ?? {}
 
-  deleteRoute.url = `${configuration.baseUrl}/:id`;
-  deleteRoute.method = HTTP_METHOD_DELETE;
+  deleteRoute.url = `${configuration.baseUrl}/:id`
+  deleteRoute.method = HTTP_METHOD_DELETE
   if (configuration.schemas?.IdParam) {
     deleteRoute.schema = {
       params: {
-        id: configuration.schemas.IdParam,
-      },
-    };
+        id: configuration.schemas.IdParam
+      }
+    }
   }
-  deleteRoute.handler = async function deleteRouteHandler(req, res) {
-    await configuration.delete(req.params.id);
-    res.status(HTTP_STATUS_DELETE);
-  };
+  deleteRoute.handler = async function deleteRouteHandler (req, res) {
+    await configuration.delete(req.params.id)
+    res.status(HTTP_STATUS_DELETE)
+  }
 
-  fastify.route(deleteRoute);
-  done();
+  fastify.route(deleteRoute)
+  done()
 }
