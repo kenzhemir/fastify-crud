@@ -10,6 +10,7 @@
  * @property {(resource: CreateBody) => Promise<void>} [create] - This function will be used to create a resource for POST {baseUrl} route
  * @property {(resourceId: string | IdParamSchema) => Promise<Resource>} [read] - This function will be used to read a resource for GET {baseUrl}/:id route
  * @property {(resourceId: string | IdParamSchema, resource: UpdateBody) => Promise<Resource>} [update] - This function will be used to read a resource for PUT {baseUrl}/:id route
+ * @property {(resourceId: string | IdParamSchema) => Promise<void>} [delete] - This function will be used to delete a resource for DELETE {baseUrl}/:id route
  *
  * @param {import('./index').Options} options
  * @returns {{
@@ -31,6 +32,7 @@ export default function createConfiguration(options) {
   configuration.create = options.create;
   configuration.read = options.read;
   configuration.update = options.update;
+  configuration.delete = options.delete;
   if (options.schemas) {
     configuration.schemas = {};
     configuration.schemas.CreateBody = options.schemas.CreateBody;
