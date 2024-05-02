@@ -1,14 +1,14 @@
-# fastify-crud plugin
+# fastify-crud
 
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkenzhemir%2Ffastify-crud%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kenzhemir/fastify-crud/main)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Fastify Plugin to create CRUD routes. This plugin is good for fast prototyping. Nothing about the endpoints
+Fastify Plugin to create CRUD routes. This plugin is good for fast prototyping.
 
 ## Installation
 
 ```shell
-npm i fastify-crud
+npm i @kenzhemir/fastify-crud
 ```
 
 ## Usage
