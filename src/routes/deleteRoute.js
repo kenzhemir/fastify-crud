@@ -1,4 +1,5 @@
-const HTTP_STATUS_DELETE = 204
+const HTTP_STATUS_DELETED = 200
+const HTTP_STATUS_NO_CONTENT = 204
 const HTTP_METHOD_DELETE = 'DELETE'
 
 /**
@@ -23,8 +24,11 @@ export default function deleteRoute (fastify, configuration, done) {
     }
   }
   deleteRoute.handler = async function deleteRouteHandler (req, res) {
-    await configuration.delete(req.params.id)
-    res.status(HTTP_STATUS_DELETE)
+    const numberOfDeletedItems = await configuration.delete(req.params.id)
+
+    res.status(
+      numberOfDeletedItems > 0 ? HTTP_STATUS_DELETED : HTTP_STATUS_NO_CONTENT
+    )
   }
 
   fastify.route(deleteRoute)
