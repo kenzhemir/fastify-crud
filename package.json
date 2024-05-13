@@ -1,6 +1,6 @@
 {
   "name": "@kenzhemir/fastify-crud",
-  "version": "0.0.2",
+  "version": "0.1.0-0",
   "description": "Fastify plugin for creating CRUD routes",
   "main": "src/index.js",
   "type": "module",
