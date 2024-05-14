@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /**
  *
@@ -28,18 +28,18 @@ function createConfiguration (options) {
   /**
    * @type Configuration
    */
-  const configuration = {};
-  configuration.defaultRouteParams = options.defaultRouteParams;
-  configuration.baseUrl = formatBaseUrl(options.baseUrl);
-  configuration.create = options.create;
-  configuration.read = options.read;
-  configuration.update = options.update;
-  configuration.delete = options.delete;
+  const configuration = {}
+  configuration.defaultRouteParams = options.defaultRouteParams
+  configuration.baseUrl = formatBaseUrl(options.baseUrl)
+  configuration.create = options.create
+  configuration.read = options.read
+  configuration.update = options.update
+  configuration.delete = options.delete
   if (options.schemas) {
-    configuration.schemas = {};
-    configuration.schemas.CreateBody = options.schemas.CreateBody;
-    configuration.schemas.UpdateBody = options.schemas.UpdateBody;
-    configuration.schemas.IdParam = options.schemas.IdParam;
+    configuration.schemas = {}
+    configuration.schemas.CreateBody = options.schemas.CreateBody
+    configuration.schemas.UpdateBody = options.schemas.UpdateBody
+    configuration.schemas.IdParam = options.schemas.IdParam
   }
 
   return { configuration }
@@ -47,17 +47,17 @@ function createConfiguration (options) {
 
 function formatBaseUrl (baseUrl) {
   if (baseUrl[0] !== '/') {
-    baseUrl = '/' + baseUrl;
+    baseUrl = '/' + baseUrl
   }
   if (baseUrl[baseUrl.length - 1] === '/') {
-    baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+    baseUrl = baseUrl.substring(0, baseUrl.length - 1)
   }
 
   return baseUrl
 }
 
-const HTTP_STATUS_CREATED = 201;
-const HTTP_METHOD_CREATE = 'POST';
+const HTTP_STATUS_CREATED = 201
+const HTTP_METHOD_CREATE = 'POST'
 
 /**
  * This function registers POST /resources route
@@ -69,31 +69,31 @@ function createRoute (fastify, configuration, done) {
   if (!configuration.create) {
     return done()
   }
-  const createRoute = configuration.defaultRouteParams ?? {};
+  const createRoute = configuration.defaultRouteParams ?? {}
 
-  createRoute.url = configuration.baseUrl;
-  createRoute.method = HTTP_METHOD_CREATE;
+  createRoute.url = configuration.baseUrl
+  createRoute.method = HTTP_METHOD_CREATE
   if (configuration.schemas?.CreateBody) {
     createRoute.schema = {
       body: configuration.schemas.CreateBody
-    };
+    }
   }
   createRoute.handler = async function createRouteHandler (req, res) {
-    const resource = await configuration.create(req, req.body);
-    res.status(HTTP_STATUS_CREATED);
+    const resource = await configuration.create(req, req.body)
+    res.status(HTTP_STATUS_CREATED)
     if (typeof resource === 'object') {
-      res.type('application/json');
+      res.type('application/json')
     }
-    res.send(JSON.stringify(resource));
-  };
+    res.send(JSON.stringify(resource))
+  }
 
-  fastify.route(createRoute);
-  done();
+  fastify.route(createRoute)
+  done()
 }
 
-const HTTP_STATUS_DELETED = 200;
-const HTTP_STATUS_NO_CONTENT = 204;
-const HTTP_METHOD_DELETE = 'DELETE';
+const HTTP_STATUS_DELETED = 200
+const HTTP_STATUS_NO_CONTENT = 204
+const HTTP_METHOD_DELETE = 'DELETE'
 
 /**
  * This function registers POST /resources route
@@ -105,31 +105,31 @@ function deleteRoute (fastify, configuration, done) {
   if (!configuration.delete) {
     return done()
   }
-  const deleteRoute = configuration.defaultRouteParams ?? {};
+  const deleteRoute = configuration.defaultRouteParams ?? {}
 
-  deleteRoute.url = `${configuration.baseUrl}/:id`;
-  deleteRoute.method = HTTP_METHOD_DELETE;
+  deleteRoute.url = `${configuration.baseUrl}/:id`
+  deleteRoute.method = HTTP_METHOD_DELETE
   if (configuration.schemas?.IdParam) {
     deleteRoute.schema = {
       params: {
         id: configuration.schemas.IdParam
       }
-    };
+    }
   }
   deleteRoute.handler = async function deleteRouteHandler (req, res) {
-    const numberOfDeletedItems = await configuration.delete(req, req.params.id);
+    const numberOfDeletedItems = await configuration.delete(req, req.params.id)
 
     res.status(
       numberOfDeletedItems > 0 ? HTTP_STATUS_DELETED : HTTP_STATUS_NO_CONTENT
-    );
-  };
+    )
+  }
 
-  fastify.route(deleteRoute);
-  done();
+  fastify.route(deleteRoute)
+  done()
 }
 
-const HTTP_STATUS_READ = 200;
-const HTTP_METHOD_READ = 'GET';
+const HTTP_STATUS_READ = 200
+const HTTP_METHOD_READ = 'GET'
 
 /**
  * This function registers POST /resources route
@@ -141,30 +141,30 @@ function readRoute (fastify, configuration, done) {
   if (!configuration.read) {
     return done()
   }
-  const readRoute = configuration.defaultRouteParams ?? {};
+  const readRoute = configuration.defaultRouteParams ?? {}
 
-  readRoute.url = `${configuration.baseUrl}/:id`;
-  readRoute.method = HTTP_METHOD_READ;
+  readRoute.url = `${configuration.baseUrl}/:id`
+  readRoute.method = HTTP_METHOD_READ
   if (configuration.schemas?.IdParam) {
     readRoute.schema = {
       params: {
         id: configuration.schemas.IdParam
       }
-    };
+    }
   }
   readRoute.handler = async function readRouteHandler (req, res) {
-    const resource = await configuration.read(req, req.params.id);
-    res.status(HTTP_STATUS_READ);
-    res.type('application/json');
-    res.send(resource);
-  };
+    const resource = await configuration.read(req, req.params.id)
+    res.status(HTTP_STATUS_READ)
+    res.type('application/json')
+    res.send(resource)
+  }
 
-  fastify.route(readRoute);
-  done();
+  fastify.route(readRoute)
+  done()
 }
 
-const HTTP_STATUS_UPDATED = 200;
-const HTTP_METHOD_UPDATE = 'PATCH';
+const HTTP_STATUS_UPDATED = 200
+const HTTP_METHOD_UPDATE = 'PATCH'
 
 /**
  * This function registers POST /resources route
@@ -176,33 +176,33 @@ function updateRoute (fastify, configuration, done) {
   if (!configuration.update) {
     return done()
   }
-  const updateRoute = configuration.defaultRouteParams ?? {};
+  const updateRoute = configuration.defaultRouteParams ?? {}
 
-  updateRoute.url = `${configuration.baseUrl}/:id`;
-  updateRoute.method = HTTP_METHOD_UPDATE;
-  const schema = {};
+  updateRoute.url = `${configuration.baseUrl}/:id`
+  updateRoute.method = HTTP_METHOD_UPDATE
+  const schema = {}
   if (configuration.schemas?.UpdateBody) {
-    schema.body = configuration.schemas.UpdateBody;
+    schema.body = configuration.schemas.UpdateBody
   }
   if (configuration.schemas?.IdParam) {
     schema.params = {
       id: configuration.schemas.IdParam
-    };
+    }
   }
   if (Object.keys(schema).length) {
-    updateRoute.schema = schema;
+    updateRoute.schema = schema
   }
   updateRoute.handler = async function updateRouteHandler (req, res) {
-    const resource = await configuration.update(req, req.params.id, req.body);
-    res.status(HTTP_STATUS_UPDATED);
+    const resource = await configuration.update(req, req.params.id, req.body)
+    res.status(HTTP_STATUS_UPDATED)
     if (typeof resource === 'object') {
-      res.type('application/json');
+      res.type('application/json')
     }
-    res.send(JSON.stringify(resource));
-  };
+    res.send(JSON.stringify(resource))
+  }
 
-  fastify.route(updateRoute);
-  done();
+  fastify.route(updateRoute)
+  done()
 }
 
 /**
@@ -225,17 +225,17 @@ function updateRoute (fastify, configuration, done) {
  * @param {() => void} done
  */
 function createCrudRoutes (fastify, options, done) {
-  const { configuration, error } = createConfiguration(options);
+  const { configuration, error } = createConfiguration(options)
   if (error) {
     return done(error)
   }
 
-  fastify.register(createRoute, configuration, done);
-  fastify.register(readRoute, configuration, done);
-  fastify.register(updateRoute, configuration, done);
-  fastify.register(deleteRoute, configuration, done);
+  fastify.register(createRoute, configuration, done)
+  fastify.register(readRoute, configuration, done)
+  fastify.register(updateRoute, configuration, done)
+  fastify.register(deleteRoute, configuration, done)
 
-  done();
+  done()
 }
 
-module.exports = createCrudRoutes;
+module.exports = createCrudRoutes
