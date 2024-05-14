@@ -48,7 +48,7 @@ t.test('Create route is registered with `create` function', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    create: function createMock (resource) {
+    create: function createMock (_, resource) {
       t.strictSame(resource, bookPayload)
       return bookFromDatabase
     }
@@ -78,7 +78,7 @@ t.test('Perform schema validation', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    create: function createMock (resource) {
+    create: function createMock (_, resource) {
       t.strictSame(resource, bookPayload)
       return bookFromDatabase
     },
