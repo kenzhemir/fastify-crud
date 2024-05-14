@@ -47,5 +47,9 @@
     "rollup": "^4.17.2",
     "standard": "*",
     "tap": "^18.7.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
