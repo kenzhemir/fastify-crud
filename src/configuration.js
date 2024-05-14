@@ -18,38 +18,38 @@
  *   error?: string
  * }}
  */
-export default function createConfiguration(options) {
+export default function createConfiguration (options) {
   if (!options.baseUrl) {
-    return { error: "No baseUrl found" };
+    return { error: 'No baseUrl found' }
   }
 
   /**
    * @type Configuration
    */
-  const configuration = {};
-  configuration.defaultRouteParams = options.defaultRouteParams;
-  configuration.baseUrl = formatBaseUrl(options.baseUrl);
-  configuration.create = options.create;
-  configuration.read = options.read;
-  configuration.update = options.update;
-  configuration.delete = options.delete;
+  const configuration = {}
+  configuration.defaultRouteParams = options.defaultRouteParams
+  configuration.baseUrl = formatBaseUrl(options.baseUrl)
+  configuration.create = options.create
+  configuration.read = options.read
+  configuration.update = options.update
+  configuration.delete = options.delete
   if (options.schemas) {
-    configuration.schemas = {};
-    configuration.schemas.CreateBody = options.schemas.CreateBody;
-    configuration.schemas.UpdateBody = options.schemas.UpdateBody;
-    configuration.schemas.IdParam = options.schemas.IdParam;
+    configuration.schemas = {}
+    configuration.schemas.CreateBody = options.schemas.CreateBody
+    configuration.schemas.UpdateBody = options.schemas.UpdateBody
+    configuration.schemas.IdParam = options.schemas.IdParam
   }
 
-  return { configuration };
+  return { configuration }
 }
 
-function formatBaseUrl(baseUrl) {
-  if (baseUrl[0] !== "/") {
-    baseUrl = "/" + baseUrl;
+function formatBaseUrl (baseUrl) {
+  if (baseUrl[0] !== '/') {
+    baseUrl = '/' + baseUrl
   }
-  if (baseUrl[baseUrl.length - 1] === "/") {
-    baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+  if (baseUrl[baseUrl.length - 1] === '/') {
+    baseUrl = baseUrl.substring(0, baseUrl.length - 1)
   }
 
-  return baseUrl;
+  return baseUrl
 }
