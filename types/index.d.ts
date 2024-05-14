@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 
 /**
  * Plugin to generate CRUD routes
@@ -42,27 +42,21 @@ export type Options<
   /**
    * - This function will be used to create a resource for POST /{baseUrl} route
    */
-  create?: <Context extends FastifyRequest>(ctx: Context, resource: TCreateBody) => Promise<IdParam>;
+  create?: (ctx: Context, resource: TCreateBody) => Promise<unknown>;
   /**
    * - This function will be used to read a resource for GET /{baseUrl}/:id route
    */
-  read?: <Context extends FastifyRequest>(
-    ctx: Context,
-    resourceId: string | IdParam
-  ) => Promise<unknown>;
+  read?: (ctx: Context, resourceId: string | IdParam) => Promise<TResource>;
   /**
    * - This function will be used to read a resource for PATCH /{baseUrl}/:id route
    */
-  update?: <Context extends FastifyRequest>(
+  update?: (
     ctx: Context,
     resourceId: string | IdParam,
     resource: TUpdateBody
-  ) => Promise<unknown>;
+  ) => Promise<TResource>;
   /**
    * - This function will be used to delete a resource for DELETE /{baseUrl}/:id route
    */
-  delete?: <Context extends FastifyRequest>(
-    ctx: Context,
-    resourceId: string | IdParam
-  ) => Promise<number>;
+  delete?: (ctx: Context, resourceId: string | IdParam) => Promise<number>;
 };
