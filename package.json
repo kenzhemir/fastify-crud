@@ -1,8 +1,15 @@
 {
   "name": "@kenzhemir/fastify-crud",
-  "version": "0.1.0",
+  "version": "0.1.1-beta.0",
   "description": "Fastify plugin for creating CRUD routes",
-  "main": "src/index.js",
+  "main": "bundle.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./bundle.js"
+    }
+  },
   "types": "types/index.d.ts",
   "type": "module",
   "engines": {
@@ -12,7 +19,8 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "tap run",
-    "test:mutation": "stryker run"
+    "test:mutation": "stryker run",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -36,6 +44,7 @@
     "@stryker-mutator/tap-runner": "^8.2.6",
     "fastify": "^4.26.2",
     "prettier": "3.2.5",
+    "rollup": "^4.17.2",
     "standard": "*",
     "tap": "^18.7.2"
   }
