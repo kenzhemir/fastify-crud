@@ -57,7 +57,7 @@ t.test('Update route is registered with `update` function', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    update: function updateMock (resourceId, resource) {
+    update: function updateMock (_, resourceId, resource) {
       t.equal(resourceId, String(bookId))
       t.strictSame(resource, bookPayload)
       return bookFromDatabase
@@ -87,7 +87,7 @@ t.test('Perform schema validation', async (t) => {
   const fastify = Fastify()
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    update: function updateMock (resourceId, resource) {
+    update: function updateMock (_, resourceId, resource) {
       t.equal(resourceId, bookId)
       t.strictSame(resource, bookPayload)
       return bookFromDatabase

@@ -21,7 +21,7 @@ export default function createRoute (fastify, configuration, done) {
     }
   }
   createRoute.handler = async function createRouteHandler (req, res) {
-    const resource = await configuration.create(req.body)
+    const resource = await configuration.create(req, req.body)
     res.status(HTTP_STATUS_CREATED)
     if (typeof resource === 'object') {
       res.type('application/json')

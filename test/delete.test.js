@@ -39,7 +39,7 @@ t.test('Delete route is registered with `delete` function', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    delete: function deleteMock (resourceId) {
+    delete: function deleteMock (_, resourceId) {
       t.strictSame(resourceId, String(bookId))
     }
   })
@@ -57,7 +57,7 @@ t.test('Delete route returns 204 if no ', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    delete: function deleteMock (resourceId) {
+    delete: function deleteMock (_, resourceId) {
       t.strictSame(resourceId, String(bookId))
       return 1
     }
@@ -76,7 +76,7 @@ t.test('Perform schema validation', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    delete: function deleteMock (resourceId) {
+    delete: function deleteMock (_, resourceId) {
       t.strictSame(resourceId, bookId)
       return 1
     },

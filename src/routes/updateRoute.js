@@ -28,7 +28,7 @@ export default function updateRoute (fastify, configuration, done) {
     updateRoute.schema = schema
   }
   updateRoute.handler = async function updateRouteHandler (req, res) {
-    const resource = await configuration.update(req.params.id, req.body)
+    const resource = await configuration.update(req, req.params.id, req.body)
     res.status(HTTP_STATUS_UPDATED)
     if (typeof resource === 'object') {
       res.type('application/json')

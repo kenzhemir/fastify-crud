@@ -23,7 +23,7 @@ export default function readRoute (fastify, configuration, done) {
     }
   }
   readRoute.handler = async function readRouteHandler (req, res) {
-    const resource = await configuration.read(req.params.id)
+    const resource = await configuration.read(req, req.params.id)
     res.status(HTTP_STATUS_READ)
     res.type('application/json')
     res.send(resource)

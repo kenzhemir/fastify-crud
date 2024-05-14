@@ -14,10 +14,10 @@ import updateRoute from './routes/updateRoute.js'
  * @property {Object} [schemas.CreateBody] - Schema for validating resource for creation
  * @property {Object} [schemas.UpdateBody] - Schema for validating resource for update
  * @property {Object} [defaultRouteParams] - Template for creating route
- * @property {(resource: TCreateBody) => Promise<IdParam>} [create] - This function will be used to create a resource for POST {baseUrl} route
- * @property {(resourceId: string | IdParam) => Promise<unknown>} [read] - This function will be used to read a resource for GET {baseUrl}/:id route
- * @property {(resourceId: string | IdParam, resource: TUpdateBody) => Promise<unknown>} [update] - This function will be used to read a resource for PUT {baseUrl}/:id route
- * @property {(resourceId: string | IdParam) => Promise<number>} [delete] - This function will be used to delete a resource for DELETE {baseUrl}/:id route
+ * @property {(ctx: Context, resource: TCreateBody) => Promise<IdParam>} [create] - This function will be used to create a resource for POST {baseUrl} route
+ * @property {(ctx: Context, resourceId: string | IdParam) => Promise<unknown>} [read] - This function will be used to read a resource for GET {baseUrl}/:id route
+ * @property {(ctx: Context, resourceId: string | IdParam, resource: TUpdateBody) => Promise<unknown>} [update] - This function will be used to read a resource for PUT {baseUrl}/:id route
+ * @property {(ctx: Context, resourceId: string | IdParam) => Promise<number>} [delete] - This function will be used to delete a resource for DELETE {baseUrl}/:id route
  *
  * @param {FastifyInstance} fastify - fastify instance
  * @param {Options} options - Options for fastify-crud plugin

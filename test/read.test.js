@@ -40,7 +40,7 @@ t.test('Read route is registered with `read` function', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    read: function readMock (resourceId) {
+    read: function readMock (_, resourceId) {
       t.strictSame(resourceId, String(bookId))
       return bookFromDatabase
     }
@@ -61,7 +61,7 @@ t.test('Perform schema validation', async (t) => {
 
   fastify.register(crudPlugin, {
     baseUrl: '/api/v1/books',
-    read: function readMock (resourceId) {
+    read: function readMock (_, resourceId) {
       t.strictSame(resourceId, bookId)
       return bookFromDatabase
     },
