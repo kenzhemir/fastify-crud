@@ -15,7 +15,7 @@ npm i @kenzhemir/fastify-crud
 
 ```javascript
 import Fastify from 'fastify'
-import crudPlugin from '@kenzhemir/fastify-crud'
+import crudPlugin from 'fastify-crud-plugin'
 
 const fastify = Fastify()
 
