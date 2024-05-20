@@ -11,7 +11,9 @@ export default function readRoute(fastify, configuration, done) {
   if (!configuration.read) {
     return done();
   }
-  const readRoute = configuration.defaultRouteParams ?? {};
+  const readRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {};
 
   readRoute.url = `${configuration.baseUrl}/:id`;
   readRoute.method = HTTP_METHOD_READ;

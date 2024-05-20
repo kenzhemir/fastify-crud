@@ -11,7 +11,9 @@ export default function createRoute(fastify, configuration, done) {
   if (!configuration.create) {
     return done();
   }
-  const createRoute = configuration.defaultRouteParams ?? {};
+  const createRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {};
 
   createRoute.url = configuration.baseUrl;
   createRoute.method = HTTP_METHOD_CREATE;

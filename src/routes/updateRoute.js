@@ -11,7 +11,9 @@ export default function updateRoute(fastify, configuration, done) {
   if (!configuration.update) {
     return done();
   }
-  const updateRoute = configuration.defaultRouteParams ?? {};
+  const updateRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {};
 
   updateRoute.url = `${configuration.baseUrl}/:id`;
   updateRoute.method = HTTP_METHOD_UPDATE;

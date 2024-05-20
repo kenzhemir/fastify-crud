@@ -12,7 +12,9 @@ export default function deleteRoute(fastify, configuration, done) {
   if (!configuration.delete) {
     return done();
   }
-  const deleteRoute = configuration.defaultRouteParams ?? {};
+  const deleteRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {};
 
   deleteRoute.url = `${configuration.baseUrl}/:id`;
   deleteRoute.method = HTTP_METHOD_DELETE;
