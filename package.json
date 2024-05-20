@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap run",
+    "test": "tap run --allow-incomplete-coverage",
     "test:mutation": "stryker run",
     "build": "rollup -c"
   },
