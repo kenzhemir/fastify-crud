@@ -20,7 +20,8 @@
     "lint:fix": "standard --fix",
     "test": "tap run --allow-incomplete-coverage",
     "test:mutation": "stryker run",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepack": "npm run build && npm run lint:fix"
   },
   "repository": {
     "type": "git",
