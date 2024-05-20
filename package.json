@@ -1,6 +1,6 @@
 {
   "name": "@kenzhemir/fastify-crud",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Fastify plugin for creating CRUD routes",
   "main": "bundle.cjs",
   "module": "src/index.js",
