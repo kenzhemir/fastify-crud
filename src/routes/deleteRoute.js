@@ -12,15 +12,18 @@ export default function deleteRoute (fastify, configuration, done) {
   if (!configuration.delete) {
     return done()
   }
-  const deleteRoute = configuration.defaultRouteParams ?? {}
+  const deleteRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   deleteRoute.url = `${configuration.baseUrl}/:id`
   deleteRoute.method = HTTP_METHOD_DELETE
   if (configuration.schemas?.IdParam) {
-    deleteRoute.schema = {
-      params: {
-        id: configuration.schemas.IdParam
-      }
+    if (!deleteRoute.schema) {
+      deleteRoute.schema = {}
+    }
+    deleteRoute.schema.params = {
+      id: configuration.schemas.IdParam
     }
   }
   deleteRoute.handler = async function deleteRouteHandler (req, res) {

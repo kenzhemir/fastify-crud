@@ -11,7 +11,9 @@ export default function updateRoute (fastify, configuration, done) {
   if (!configuration.update) {
     return done()
   }
-  const updateRoute = configuration.defaultRouteParams ?? {}
+  const updateRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   updateRoute.url = `${configuration.baseUrl}/:id`
   updateRoute.method = HTTP_METHOD_UPDATE
@@ -25,7 +27,10 @@ export default function updateRoute (fastify, configuration, done) {
     }
   }
   if (Object.keys(schema).length) {
-    updateRoute.schema = schema
+    updateRoute.schema = {
+      ...(updateRoute.schema ?? {}),
+      ...schema
+    }
   }
   updateRoute.handler = async function updateRouteHandler (req, res) {
     const resource = await configuration.update(req, req.params.id, req.body)

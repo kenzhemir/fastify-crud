@@ -69,14 +69,17 @@ function createRoute (fastify, configuration, done) {
   if (!configuration.create) {
     return done()
   }
-  const createRoute = configuration.defaultRouteParams ?? {}
+  const createRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   createRoute.url = configuration.baseUrl
   createRoute.method = HTTP_METHOD_CREATE
   if (configuration.schemas?.CreateBody) {
-    createRoute.schema = {
-      body: configuration.schemas.CreateBody
+    if (!createRoute.schema) {
+      createRoute.schema = {}
     }
+    createRoute.schema.body = configuration.schemas.CreateBody
   }
   createRoute.handler = async function createRouteHandler (req, res) {
     const resource = await configuration.create(req, req.body)
@@ -105,15 +108,18 @@ function deleteRoute (fastify, configuration, done) {
   if (!configuration.delete) {
     return done()
   }
-  const deleteRoute = configuration.defaultRouteParams ?? {}
+  const deleteRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   deleteRoute.url = `${configuration.baseUrl}/:id`
   deleteRoute.method = HTTP_METHOD_DELETE
   if (configuration.schemas?.IdParam) {
-    deleteRoute.schema = {
-      params: {
-        id: configuration.schemas.IdParam
-      }
+    if (!deleteRoute.schema) {
+      deleteRoute.schema = {}
+    }
+    deleteRoute.schema.params = {
+      id: configuration.schemas.IdParam
     }
   }
   deleteRoute.handler = async function deleteRouteHandler (req, res) {
@@ -141,15 +147,18 @@ function readRoute (fastify, configuration, done) {
   if (!configuration.read) {
     return done()
   }
-  const readRoute = configuration.defaultRouteParams ?? {}
+  const readRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   readRoute.url = `${configuration.baseUrl}/:id`
   readRoute.method = HTTP_METHOD_READ
   if (configuration.schemas?.IdParam) {
-    readRoute.schema = {
-      params: {
-        id: configuration.schemas.IdParam
-      }
+    if (!readRoute.schema) {
+      readRoute.schema = {}
+    }
+    readRoute.schema.params = {
+      id: configuration.schemas.IdParam
     }
   }
   readRoute.handler = async function readRouteHandler (req, res) {
@@ -176,7 +185,9 @@ function updateRoute (fastify, configuration, done) {
   if (!configuration.update) {
     return done()
   }
-  const updateRoute = configuration.defaultRouteParams ?? {}
+  const updateRoute = configuration.defaultRouteParams
+    ? structuredClone(configuration.defaultRouteParams)
+    : {}
 
   updateRoute.url = `${configuration.baseUrl}/:id`
   updateRoute.method = HTTP_METHOD_UPDATE
@@ -190,7 +201,10 @@ function updateRoute (fastify, configuration, done) {
     }
   }
   if (Object.keys(schema).length) {
-    updateRoute.schema = schema
+    updateRoute.schema = {
+      ...(updateRoute.schema ?? {}),
+      ...schema
+    }
   }
   updateRoute.handler = async function updateRouteHandler (req, res) {
     const resource = await configuration.update(req, req.params.id, req.body)
