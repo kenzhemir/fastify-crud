@@ -1,5 +1,5 @@
-const HTTP_STATUS_UPDATED = 200;
-const HTTP_METHOD_UPDATE = "PATCH";
+const HTTP_STATUS_UPDATED = 200
+const HTTP_METHOD_UPDATE = 'PATCH'
 
 /**
  * This function registers POST /resources route
@@ -7,40 +7,40 @@ const HTTP_METHOD_UPDATE = "PATCH";
  * @param {import('../configuration').Configuration} configuration
  * @returns
  */
-export default function updateRoute(fastify, configuration, done) {
+export default function updateRoute (fastify, configuration, done) {
   if (!configuration.update) {
-    return done();
+    return done()
   }
   const updateRoute = configuration.defaultRouteParams
     ? structuredClone(configuration.defaultRouteParams)
-    : {};
+    : {}
 
-  updateRoute.url = `${configuration.baseUrl}/:id`;
-  updateRoute.method = HTTP_METHOD_UPDATE;
-  const schema = {};
+  updateRoute.url = `${configuration.baseUrl}/:id`
+  updateRoute.method = HTTP_METHOD_UPDATE
+  const schema = {}
   if (configuration.schemas?.UpdateBody) {
-    schema.body = configuration.schemas.UpdateBody;
+    schema.body = configuration.schemas.UpdateBody
   }
   if (configuration.schemas?.IdParam) {
     schema.params = {
-      id: configuration.schemas.IdParam,
-    };
+      id: configuration.schemas.IdParam
+    }
   }
   if (Object.keys(schema).length) {
     updateRoute.schema = {
       ...(updateRoute.schema ?? {}),
-      ...schema,
-    };
-  }
-  updateRoute.handler = async function updateRouteHandler(req, res) {
-    const resource = await configuration.update(req, req.params.id, req.body);
-    res.status(HTTP_STATUS_UPDATED);
-    if (typeof resource === "object") {
-      res.type("application/json");
+      ...schema
     }
-    res.send(JSON.stringify(resource));
-  };
+  }
+  updateRoute.handler = async function updateRouteHandler (req, res) {
+    const resource = await configuration.update(req, req.params.id, req.body)
+    res.status(HTTP_STATUS_UPDATED)
+    if (typeof resource === 'object') {
+      res.type('application/json')
+    }
+    res.send(JSON.stringify(resource))
+  }
 
-  fastify.route(updateRoute);
-  done();
+  fastify.route(updateRoute)
+  done()
 }
